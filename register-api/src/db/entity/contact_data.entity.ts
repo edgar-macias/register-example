@@ -6,7 +6,7 @@ export class ContactDataEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ name:"email",type: 'varchar', length: 50, nullable: false })
+    @Column({ name:"email",type: 'varchar', length: 50, nullable: false, unique:true })
     email: string;
 
     @Column({ name:"phone_number", type: 'varchar', length: 10, nullable: false })
