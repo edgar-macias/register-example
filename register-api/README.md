@@ -2,8 +2,6 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
     <p align="center">
@@ -29,7 +27,26 @@
 ## Installation
 
 ```bash
-$ npm install
+npm install
+```
+
+## Enviroment file
+
+```bash
+# add to src the .env file
+PORT=3001
+BASE_URL=http://localhost:3001
+
+DATABASE_HOST=localhost
+DATABASE_NAME=dbname
+DATABASE_USER=postgres
+DATABASE_PASSWORD=password
+DATABASE_PORT=5432
+
+
+MAIL_USER= "mail@test"
+MAIL_PASSWORD="password"
+MAIL_TEMPLATES_DIR="/src/resources/mail/templates"
 ```
 
 ## Running the app
