@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+  psql:
+    image: postgres:13.3
+    container_name: psql
+    restart: always
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: register
+    ports:
+    - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - register-network
+    volumes:
+    - ./register.sql:/docker-entrypoint-initdb.d/register.sql
+  client:
+    build: ./register_front
+    ports:
+      - "3000:3000"
+    command: npm run dev
+    networks:
+      - register-network
+  api:
+    depends_on:
+      psql:
+        condition: service_healthy
+    build: ./register-api
+    ports:
+    - "3001:3001"
+    command: npm run start:dev
+    networks:
+      - register-network
+    environment:
+      PORT: 3001
+      BASE_URL: http://localhost:3001
+      DATABASE_HOST: psql
+      DATABSE_NAME: register
+      DATABASE_PASSWORD: password
+      DATABASE_PORT: 5432
+
+      MAIL_USER: "mail@test.com"
+      MAIL_PASSWORD: "pswdtest"
+      MAIL_TEMPLATES_DIR: "/src/resources/mail/templates"
+
+networks:
+  register-network:
+    external: true
