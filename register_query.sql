@@ -13,6 +13,6 @@ CREATE TABLE public.contact_data(
 
 CREATE TABLE public.security(
     id serial primary key,
-    clientes_id REFERENCES clientes(id),
+    clientes_id int REFERENCES clientes(id),
     password varchar(50) not null
 );
