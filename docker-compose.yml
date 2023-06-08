@@ -16,6 +16,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - register-network
     volumes:
     - ./register_query.sql:/docker-entrypoint-initdb.d/register_query.sql
   client:
@@ -23,8 +25,8 @@ services:
     ports:
       - "3000:3000"
     command: npm run dev
-    links:
-      - api
+    networks:
+      - register-network
   api:
     depends_on:
       psql:
@@ -34,8 +36,8 @@ services:
     ports:
     - "3001:3001"
     command: npm run start:dev
-    links:
-      - psql
+    networks:
+      - register-network
     environment:
       PORT: 3001
       BASE_URL: http://localhost:3001
@@ -47,3 +49,7 @@ services:
       MAIL_USER: "mail@test.com"
       MAIL_PASSWORD: "pswdtest"
       MAIL_TEMPLATES_DIR: "/src/resources/mail/templates"
+
+networks:
+  register-network:
+    driver: bridge
